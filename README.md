@@ -1,4 +1,4 @@
-Example using Postgres.js with Next.js 9.3 getStaticProps.
+Example using Postgres.js with Next.js 9.3 `getStaticProps` and `getStaticPaths`.
 
 <br /><br />
 
