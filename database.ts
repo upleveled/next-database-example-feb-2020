@@ -1,3 +1,5 @@
+import { Product } from './types';
+
 // Retrieve config from .env file
 require('dotenv').config();
 
@@ -14,7 +16,7 @@ const postgres = require('postgres');
 // );
 const sql = postgres();
 
-export async function getAllProducts() {
+export async function getAllProducts(): Promise<Product[]> {
   const products = await sql`
     SELECT * FROM products;
   `;

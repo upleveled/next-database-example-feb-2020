@@ -1,4 +1,10 @@
-export default function Home(props) {
+import { Product } from '../types';
+
+type Props = {
+  product: Product;
+};
+
+export default function Home(props: Props) {
   return (
     <>
       {props.product.id}: {props.product.name}
@@ -6,7 +12,7 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps(ctx) {
+export async function getStaticProps(ctx): Promise<{ props: Props }> {
   const { getAllProducts } = await import('../database');
   const products = await getAllProducts();
   return {

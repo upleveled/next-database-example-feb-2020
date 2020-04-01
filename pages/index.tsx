@@ -1,4 +1,10 @@
-export default function Home(props) {
+import { Product } from '../types';
+
+type Props = {
+  products: Product[];
+};
+
+export default function Home(props: Props) {
   return (
     <ul>
       {props.products.map(product => (
@@ -10,7 +16,11 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps() {
+type GetStaticPropsReturn = {
+  props: Props;
+};
+
+export async function getStaticProps(): Promise<GetStaticPropsReturn> {
   const { getAllProducts } = await import('../database');
   const products = await getAllProducts();
   return {
