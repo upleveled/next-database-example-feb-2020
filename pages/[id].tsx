@@ -1,18 +1,23 @@
+import { GetStaticProps, GetStaticPaths, NextPage } from 'next';
 import { Product } from '../types';
 
 type Props = {
   product: Product;
 };
 
-export default function Home(props: Props) {
+const ProductPage: NextPage<Props> = props => {
   return (
     <>
       {props.product.id}: {props.product.name}
     </>
   );
-}
+};
 
-export async function getStaticProps(ctx): Promise<{ props: Props }> {
+export default ProductPage;
+
+const getStaticProps: GetStaticProps = async (
+  ctx,
+): Promise<{ props: Props }> => {
   const { getAllProducts } = await import('../database');
   const products = await getAllProducts();
   return {
@@ -20,9 +25,11 @@ export async function getStaticProps(ctx): Promise<{ props: Props }> {
       product: products.find(product => product.id === Number(ctx.params.id)),
     },
   };
-}
+};
 
-export async function getStaticPaths() {
+export { getStaticProps };
+
+const getStaticPaths: GetStaticPaths = async () => {
   const { getAllProducts } = await import('../database');
   const products = await getAllProducts();
 
@@ -34,4 +41,6 @@ export async function getStaticPaths() {
     paths: paths,
     fallback: false,
   };
-}
+};
+
+export { getStaticPaths };

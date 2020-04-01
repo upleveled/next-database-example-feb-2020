@@ -1,10 +1,11 @@
+import { GetStaticProps, NextPage, GetStaticPaths } from 'next';
 import { Product } from '../types';
 
 type Props = {
   products: Product[];
 };
 
-export default function Home(props: Props) {
+const Home: NextPage<Props> = props => {
   return (
     <ul>
       {props.products.map(product => (
@@ -14,13 +15,15 @@ export default function Home(props: Props) {
       ))}
     </ul>
   );
-}
+};
+
+export default Home;
 
 type GetStaticPropsReturn = {
   props: Props;
 };
 
-export async function getStaticProps(): Promise<GetStaticPropsReturn> {
+const getStaticProps: GetStaticProps = async (): Promise<GetStaticPropsReturn> => {
   const { getAllProducts } = await import('../database');
   const products = await getAllProducts();
   return {
@@ -28,4 +31,6 @@ export async function getStaticProps(): Promise<GetStaticPropsReturn> {
       products: products,
     },
   };
-}
+};
+
+export { getStaticProps };
